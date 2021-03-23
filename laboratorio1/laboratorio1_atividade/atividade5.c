@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-#define TAM  100
+#define TAM  10000
 #define NTHREADS  2
 
 int vetor[TAM];
@@ -19,7 +19,7 @@ int main (void){
 		vetor[i]=0;
 	}
 	imprimeVetor();
-
+	//cria as threads novas
 	for(i = 0; i < NTHREADS; i++){
 		identificador[i] = i+1;
 		if(pthread_create(&tid_sistema[i], NULL, incrementa, (void *)&identificador[i])){
