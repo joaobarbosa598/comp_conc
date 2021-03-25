@@ -9,6 +9,7 @@ int vetor[TAM];
 
 void * incrementa (void * arg);
 void imprimeVetor();
+void verificaSaidaCorreta();
 
 int main (void){
 	pthread_t tid_sistema[NTHREADS];
@@ -18,7 +19,7 @@ int main (void){
 	for(i = 0; i < TAM; i++){
 		vetor[i]=0;
 	}
-	imprimeVetor();
+	//imprimeVetor();
 	//cria as threads novas
 	for(i = 0; i < NTHREADS; i++){
 		identificador[i] = i+1;
@@ -34,7 +35,8 @@ int main (void){
 		}
 	}
 
-	imprimeVetor();
+	//imprimeVetor();
+	verificaSaidaCorreta();
 
 	//imprime a mensagem de boas vindas
 	printf("Ola, sou a thread principal!\n");
@@ -68,4 +70,14 @@ void imprimeVetor(){
 		
 	}
 	printf("\n"); 
+}
+
+void verificaSaidaCorreta(){
+	for(int i = 0; i < TAM; i++){
+		if(vetor[i]!=1){
+			printf("A saída do programa não condiz com o que foi proposto.\n");
+			return;
+		}
+	}
+	printf("A saída do programa está correta\n");
 }
