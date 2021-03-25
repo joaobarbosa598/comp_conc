@@ -22,7 +22,8 @@ int main (void){
 		}
 	}
 	//espera as threads terminarem
-	for(int i = 0; i < NTHREADS; i++){
+	for(int i = NTHREADS-1; i > -1 ; i--){ 
+		printf("Esperando a thread %d terminar\n", ident[i]);
 		if(pthread_join(tid[i], NULL)){
 			printf("ERRO -- pthread_join\n");
 		}
