@@ -1,8 +1,8 @@
-#Relatório - Laboratório 1
+# Relatório - Laboratório 1
 
-##João Vitor de Freitas Barbosa - 117055449
+## João Vitor de Freitas Barbosa - 117055449
 
-###Este trabalho consiste em um programa concorrente, com duas threads(além da pricipal), para incrementar de 1 cada elemento de um vetor de 10000 elementos.
+### Este trabalho consiste em um programa concorrente, com duas threads(além da pricipal), para incrementar de 1 cada elemento de um vetor de 10000 elementos.
 
 A estratégia utilizada para distribuição das tarefas entre as threads foi a intercalação dos elementos
 
