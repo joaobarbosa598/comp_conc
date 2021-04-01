@@ -100,7 +100,7 @@ int preencheMatriz(){
 	matrizA = (float **) malloc(sizeof(float *) * linhas);
 	matrizB = (float **) malloc(sizeof(float *) * linhas);
 	matrizSaida = (float **) malloc(sizeof(float *) * linhas);
-	if(!matrizA || !matrizB){
+	if(!matrizA || !matrizB || !matrizSaida){
 		puts("ERRO-malloc");
 		return 1;
 	}
