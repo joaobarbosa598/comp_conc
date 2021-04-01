@@ -1,4 +1,4 @@
-/*Laboratório 2 - Computacao Concorrente
+/*Laboratório 2 - Computacao Concorrente - Multiplicacao de duas matrizes quadradas pre-definidas
 Nome: João Vitor de Freitas Barbosa
 DRE: 117055449*/
 #include <stdio.h>

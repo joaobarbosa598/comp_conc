@@ -1,7 +1,7 @@
 /* Disciplina: Computacao Concorrente */
-/* Prof.: Silvana Rossetto */
-/* Laboratório: 3 */
-/* Codigo: Multiplica uma matriz por uma matriz */
+/* Nome: Joao Vitor de Freitas */
+/* Laboratório: 2 */
+/* Codigo: Multiplica uma matriz por uma matriz atraves de arquivos*/
 
 #include <stdio.h>
 #include <stdlib.h>
