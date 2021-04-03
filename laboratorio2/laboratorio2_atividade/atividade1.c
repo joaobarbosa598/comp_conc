@@ -58,6 +58,14 @@ int main(int argc, char *argv[]){
 	tid = (pthread_t *) malloc(sizeof(pthread_t)*nThreads);
 	if(tid==NULL){puts("ERRO-malloc"); return 2;}
 
+	GET_TIME(fim);
+
+	//calcula o tempo gasto com as inicializacoes
+	delta1 = fim - inicio;
+
+	//-----------------------------------------------------------------------------------
+   	GET_TIME(inicio);
+
 	//criacao das threads
 	for(int i=0; i<nThreads; i++){
 		id = (int*)malloc(sizeof(int));
@@ -74,11 +82,31 @@ int main(int argc, char *argv[]){
 			puts("ERRO--pthread_join"); return 4;
 		}
 	}
+
+	GET_TIME(fim);
+
+	//calcula o tempo gasto com a parte concorrente (multiplicacao das matrizes)
+	delta2 = fim - inicio;
+
+
 	imprimeMatriz(arqSaida);
 
+	//-----------------------------------------------------------------------------------
+	GET_TIME(inicio);
+
+	//libera os espacos de memoria alocados
 	free(matrizA);
 	free(matrizB);
 	free(matrizSaida);
+
+	GET_TIME(fim);
+
+	//calcula o tempo gasto com as finalizacoes 
+	delta3 = fim - inicio;
+	//exibe os tempos gastos em cada parte do programa 
+	printf("Tempo inicializacoes: %.8lf\n", delta1);
+	printf("Tempo multiplicacao de duas matrizes %dx%d com %d threads: %.8lf\n", linhas, colunas, nThreads, delta2);
+	printf("Tempo finalizacoes: %.8lf\n", delta3);
 }
 
 void * multiplicaMatrizMAtriz(void * arg){
