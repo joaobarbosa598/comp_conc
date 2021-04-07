@@ -62,15 +62,14 @@ int main (int argc, char *argv[]){
 
 void * calculaPiConcorrente(void * arg){
 
-	int td = *(int *) arg;
+	int id = *(int *) arg;
 	double num = 0.0;
 	double aux = 0.0;
 	double *numAux;
 	numAux = (double*) malloc(sizeof(double));
 	int i;
 	
-	for(i = td, aux = (double)td; i < numElementosSerie; i+=nThreads, aux+=nThreads)
-	{
+	for(i = id, aux = (double)id; i < numElementosSerie; i+=nThreads, aux+=nThreads){
 		if( i%2 == 0 )num += 1/(2*aux+1);
 		else num -= 1/(2*aux+1);
 	}
