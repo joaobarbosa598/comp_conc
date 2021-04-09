@@ -16,6 +16,10 @@ int main (int argc, char *argv[]){
 	int *id;
 	double somaConc = 0.0;
 	double pi = 4.0;
+	double inicio, fim, delta1, delta2; //variaveis para medir o tempo de execucao
+
+	//-------------------------------------------------------------//
+   	GET_TIME(inicio);
 
 	if(argc<3){
 		fprintf(stderr, "Digite: %s <numero de elementos da serie> <numero de threads>\n", argv[0]);
@@ -31,6 +35,15 @@ int main (int argc, char *argv[]){
 		fprintf(stderr, "ERRO--malloc\n");
 		return 2;
 	}
+
+	GET_TIME(fim);
+
+	//calcula o tempo gasto com as inicializacoes
+	delta1 = fim - inicio;
+
+	//-----------------------------------------------------------------------------------
+   	GET_TIME(inicio);
+
 	//criar as threads
 	for(long int i=0; i<nThreads; i++){
 		id = (int*)malloc(sizeof(int));
@@ -54,10 +67,19 @@ int main (int argc, char *argv[]){
 
 		free(retorno);
 	}
+	GET_TIME(fim);
+
+	//calcula o tempo gasto com a parte concorrente (calculo de pi)
+	delta2 = fim - inicio;
+
+	free(tid);
+
 	pi *= somaConc;
 	printf("pi: %.15lf\n", pi);
 
 	printf("Pi: %.15lf\n", M_PI);
+	printf("Tempo inicializacoes: %.8lf\n", delta1);
+	printf("Tempo do calculo de pi com %d threads: %.8lf\n", nThreads, delta2);
 }
 
 void * calculaPiConcorrente(void * arg){
