@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "timer.h"
+#include <pthread.h>
 
 double calculaPi(long int numElementosSerie);
 
@@ -8,6 +10,11 @@ int main (int argc, char *argv[]){
 
 	double result;
 	long int numElementosSerie;
+	double inicio, fim, delta1; //variaveis para medir o tempo de execucao
+
+	//-------------------------------------------------------------//
+   	GET_TIME(inicio);
+
 	if(argc < 2){
 		fprintf(stderr, "Digite: %s <numero de elementos da serie>\n", argv[0]);
 		return 1;
@@ -15,8 +22,15 @@ int main (int argc, char *argv[]){
 
 	numElementosSerie = atoll(argv[1]);
 	result = calculaPi(numElementosSerie);
-	printf("Pi: %.12f\n", result);
-	printf("Pi: %.12lf\n", M_PI);
+
+	GET_TIME(fim);
+
+	//calcula o tempo gasto para o cálculo de pi
+	delta1 = fim - inicio;
+
+	printf("Pi: %.15f\n", result);
+	printf("Pi: %.15lf\n", M_PI);
+	printf("Tempo do calculo de pi sequencial: %.8lf\n", delta1);
 	return 0;
 }
 
