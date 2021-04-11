@@ -1,4 +1,4 @@
-# Relatório - Laboratório 2
+# Relatório - Laboratório 3
 
 João Vitor de Freitas Barbosa - 117055449
 
