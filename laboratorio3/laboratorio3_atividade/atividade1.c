@@ -75,9 +75,9 @@ int main (int argc, char *argv[]){
 	free(tid);
 
 	pi *= somaConc;
-	printf("pi: %.15lf\n", pi);
+	printf("pi:      %.15lf\n", pi);
 
-	printf("Pi: %.15lf\n", M_PI);
+	printf("Real Pi: %.15lf\n", M_PI);
 	printf("Tempo inicializacoes: %.8lf\n", delta1);
 	printf("Tempo do calculo de pi com %d threads: %.8lf\n", nThreads, delta2);
 }
