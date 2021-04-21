@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <math.h>
+#include "timer.h"
 
 int nThreads;
 long int N;
@@ -17,6 +18,10 @@ int main(int argc, char *argv[]){
 	pthread_t *tid; //identificadores das threads no sistema
 	int *id;
 	double *retorno; //valor de retorno das threads
+	double inicio, fim, delta1, delta2; //variaveis para medir o tempo de execucao
+
+	//-------------------------------------------------------------//
+   	GET_TIME(inicio);
 
 	//recebe e valida os parametros de entrada (dimensao do vetor, numero de threads)
 	if(argc < 5){
@@ -44,6 +49,14 @@ int main(int argc, char *argv[]){
 		return 2;
 	}
 
+	GET_TIME(fim);
+
+	//calcula o tempo gasto com as inicializacoes
+	delta1 = fim - inicio;
+
+	//-----------------------------------------------------------------------------------
+   	GET_TIME(inicio);
+
 	//criar as threads
 	for(long int i=0; i<nThreads; i++){
 		id = (int*)malloc(sizeof(int));
@@ -67,7 +80,17 @@ int main(int argc, char *argv[]){
 		
 		free(retorno);
 	}
-	printf("Soma concorrente: %.15lf\n", somaConc);
+
+	GET_TIME(fim);
+
+	//calcula o tempo gasto com a parte concorrente (calculo da integral)
+	delta2 = fim - inicio;
+
+	printf("O valor da integração é: %.15lf\n", somaConc);
+	
+	//exibe os tempos gastos em cada parte do programa 
+    printf("Tempo inicializacoes: %.8lf\n", delta1);
+    printf("Tempo do calculo da integral: %.8lf\n", delta2);
 
 	free(tid);
 	return 0;
@@ -95,5 +118,6 @@ void * integral(void * arg){
 }
 
 double funcao(double x){
+	//return exp(1-(x*x));
 	return cos(5*x);
 }
