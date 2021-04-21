@@ -70,5 +70,6 @@ int main(int argc, char **argv)
 
 
 double funcao(double x){
+    //return exp(1-(x*x));
     return cos(5*x);
 }

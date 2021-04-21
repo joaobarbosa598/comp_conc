@@ -89,8 +89,8 @@ int main(int argc, char *argv[]){
 	printf("O valor da integração é: %.15lf\n", somaConc);
 	
 	//exibe os tempos gastos em cada parte do programa 
-    printf("Tempo inicializacoes: %.8lf\n", delta1);
-    printf("Tempo do calculo da integral: %.8lf\n", delta2);
+	printf("Tempo inicializacoes: %.8lf\n", delta1);
+	printf("Tempo do calculo da integral: %.8lf\n", delta2);
 
 	free(tid);
 	return 0;
