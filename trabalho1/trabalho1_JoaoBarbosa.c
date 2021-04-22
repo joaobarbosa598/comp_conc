@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <math.h>
+#include <string.h>
 #include "timer.h"
 
 int nThreads;
@@ -29,8 +30,20 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	a = atof(argv[1]);
-	b = atof(argv[2]);
+	if(strcmp(argv[1], "M_PI")==0){
+    	a = M_PI;
+    }
+    else{
+    	a = atof(argv[1]);
+    }
+
+    if(strcmp(argv[2], "M_PI")==0){
+    	b = M_PI;
+    }
+    else{
+    	b = atof(argv[2]);
+    }
+
 	N = atol(argv[3]);
 	nThreads = atoi(argv[4]);
 
@@ -119,5 +132,6 @@ void * integral(void * arg){
 
 double funcao(double x){
 	//return exp(1-(x*x));
-	return cos(5*x);
+	//return cos(5*x);
+    return sqrt(1+cos(4*x));
 }
