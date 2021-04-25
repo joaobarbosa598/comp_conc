@@ -52,7 +52,7 @@ void * T1 (void * arg){
 	//printf("T1: comecei\n");
   	pthread_mutex_lock(&x_mutex);
 	if(x < 3){
-    	//printf("T1: x= %d, vai se bloquear...\n", x);
+		//printf("T1: x= %d, vai se bloquear...\n", x);
 		pthread_cond_wait(&x_cond2, &x_mutex);
 		//printf("T1: sinal recebido e mutex realocado, x = %d\n", x);
 	}
@@ -66,7 +66,7 @@ void * T2 (void * arg){
 	//printf("T2: comecei\n");
   	pthread_mutex_lock(&x_mutex);
 	if(x < 1){
-    	//printf("T2: x= %d, vai se bloquear...\n", x);
+		//printf("T2: x= %d, vai se bloquear...\n", x);
 		pthread_cond_wait(&x_cond, &x_mutex);
 		//printf("T2: sinal recebido e mutex realocado, x = %d\n", x);
 	}
@@ -84,7 +84,7 @@ void * T3 (void * arg){
 	//printf("T3: comecei\n");
   	pthread_mutex_lock(&x_mutex);
 	if(x < 1){
-    	//printf("T3: x= %d, vai se bloquear...\n", x);
+		//printf("T3: x= %d, vai se bloquear...\n", x);
 		pthread_cond_wait(&x_cond, &x_mutex);
 		//printf("T3: sinal recebido e mutex realocado, x = %d\n", x);
 	}
