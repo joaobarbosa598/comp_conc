@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <pthread.h>
 
 int contaFoo=0, contaBar=0; //variaveis de estado
@@ -50,17 +51,17 @@ void * Foo(void* args) {
 		//...codigo principal da thread
 		//forc ̧a alternancia com as threads Bar
 		pthread_mutex_lock(&mutex);
-  		printf("Foo: Comecei: thread %d\n", id);
+  		//printf("Foo: Comecei: thread %d\n", id);
 		contaFoo++;
-		printf("contaFoo: %d\n", contaFoo);
+		//printf("contaFoo: %d\n", contaFoo);
 		if(contaFoo==5) {
 			contaFoo=0;
   			printf("Foo: Thread %d vai liberar as funcoes Bar para funcionamento\n", id);
 			pthread_cond_broadcast(&condBar);
 		}
-     	printf("Foo: thread %d se bloqueou...\n", id);
+     	printf("Foo %d executou e vai se bloquear...\n", id);
 		pthread_cond_wait(&condFoo, &mutex);
-     	printf("Foo: thread %d se desbloqueou...\n", id);
+     	printf("Foo %d desbloqueou e vai executar...\n", id);
 		pthread_mutex_unlock(&mutex);
 	} 
 }
@@ -69,10 +70,10 @@ void * Bar(void* args) {
 	int id = *(int *)args;
 	//aguarda as threads Foo executarem primeiro
 	pthread_mutex_lock(&mutex);
-  	printf("Bar: Comecei: thread %d\n", id);
- 	printf("Bar: thread %d se bloqueou fora do while...\n", id);
+  	//printf("Bar: Comecei: thread %d\n", id);
+ 	printf("Bar %d não executou e espera todas as Foo terminarem...\n", id);
 	pthread_cond_wait(&condBar, &mutex);
- 	printf("Bar: thread %d se desbloqueou fora do while...\n", id);
+ 	printf("Bar %d desbloqueou e vai executar...\n", id);
 	pthread_mutex_unlock(&mutex);
 	while(1) {
 		//...codigo principal da thread
@@ -85,9 +86,9 @@ void * Bar(void* args) {
   			printf("Bar: Thread %d vai liberar as funcoes Foo para funcionamento\n", id);
 			pthread_cond_broadcast(&condFoo);
 		}
-     	printf("Bar: thread %d se bloqueou dentro do while...\n", id);
+     	printf("Bar %d executou e vai se bloquear\n", id);
 		pthread_cond_wait(&condBar, &mutex);
-     	printf("Bar: thread %d se desbloqueou dentro do while...\n", id);
+     	printf("Bar %d desbloqueou e vai executar...\n", id);
 		pthread_mutex_unlock(&mutex);
 	} 
 }
