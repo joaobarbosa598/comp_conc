@@ -3,8 +3,8 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define L 10 //numero de threads leitoras
-#define E 10 //numero de threads escritoras
+int sensores; //numero de threads escritoras
+int atuadores; //numero de threads leitoras
 
 typedef struct{
 	int temperatura;
