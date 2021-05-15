@@ -7,12 +7,13 @@
 //variaveis do problema
 int leit=0; //contador de threads lendo
 int escr=0; //contador de threads escrevendo
+int escritorasEsperando = 0; //contador de threads escritoras esperando
 int pos = 0;
 
 void iniciaLeitura(int id){
 	pthread_mutex_lock(&mutex);
 	//printf("L[%d] quer ler\n", id);
-	while(escr > 0) {
+	while(escr > 0 || escritorasEsperando > 0) {
 		//printf("L[%d] bloqueou\n", id);
 		pthread_cond_wait(&cond_leit, &mutex);
 		//printf("L[%d] desbloqueou\n", id);
@@ -34,7 +35,9 @@ void iniciaEscrita(int id){
 	//printf("E[%d] quer escrever\n", id);
 	while((leit>0) || (escr>0)) {
 		//printf("E[%d] bloqueou\n", id);
+		escritorasEsperando += 1;
 		pthread_cond_wait(&cond_escr, &mutex);
+		escritorasEsperando -= 1;
 		//printf("E[%d] desbloqueou\n", id);
 	}
 	escr++;
