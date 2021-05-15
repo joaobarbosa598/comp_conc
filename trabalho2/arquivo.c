@@ -52,15 +52,20 @@ void fechaEscrita(int id){
 
 void * sensor(void * arg){
 	int *id = (int *) arg;
-	int iteracaoSensor = 0;
+	int iteracaoSensor = 0; //identificador local de iteracao da leitura do Sensor
+	int temperaturaAux = 0;
 	while(1) {
 		iniciaEscrita(*id);
 		//printf("Escritora %d esta escrevendo\n", *id);
-		meusDados[pos].temperatura = rand()% 15 + 25;
-		meusDados[pos].idSensor = *id;
-		meusDados[pos].idLeitura = iteracaoSensor;
-		pos = (pos+1)%60;
-		iteracaoSensor++;
+		//representa = rand() % range + min ----> 16 + 25 = [25,40];
+		temperaturaAux = rand()% 16 + 25;
+		if(temperaturaAux > 30){
+			meusDados[pos].temperatura = temperaturaAux;
+			meusDados[pos].idSensor = *id;
+			meusDados[pos].idLeitura = iteracaoSensor;
+			pos = (pos+1)%60;
+			iteracaoSensor++;
+		}
 		fechaEscrita(*id);
 		sleep(2);
 	} 
@@ -75,9 +80,11 @@ void * atuador(void * arg){
 		//printf("Leitora %d esta lendo\n", *id);
 		for(int i = 0; i < 60; i++){
 			if(meusDados[i].idSensor == *id && meusDados[i].idLeitura>0){
+				//coloquei toda a saida em um print apenas pois com mais, o print estava saindo desordenado
 				printf("meusDados[%d].temperatura:%d\nmeusDados[%d].idSensor:%d\nmeusDados[%d].idLeitura:%d\n\n", i, meusDados[i].temperatura, i, meusDados[i].idSensor, i, meusDados[i].idLeitura);
-				//printf("", i, meusDados[i].idSensor);
-				//printf("", i, meusDados[i].idLeitura);
+				/*printf("meusDados[%d].temperatura:%d\n", i, meusDados[i].temperatura);
+				printf("meusDados[%d].idSensor:%d\n", i, meusDados[i].idSensor);
+				printf("meusDados[%d].idLeitura:%d\n\n", i, meusDados[i].idLeitura);*/
 			}
 		}
 		fechaLeitura(*id);
