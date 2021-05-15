@@ -67,7 +67,7 @@ void * sensor(void * arg){
 			iteracaoSensor++;
 		}
 		fechaEscrita(*id);
-		sleep(2);
+		sleep(1);
 	} 
 	free(arg);
 	pthread_exit(NULL);
@@ -75,18 +75,43 @@ void * sensor(void * arg){
 
 void * atuador(void * arg){
 	int *id = (int *) arg;
+	int leituraAtuador = 0;
+	int verificaAlerta = 0;
+	int temperaturas = 0;
+	double media;
 	while(1) {
 		iniciaLeitura(*id);
 		//printf("Leitora %d esta lendo\n", *id);
 		for(int i = 0; i < 60; i++){
 			if(meusDados[i].idSensor == *id && meusDados[i].idLeitura>0){
 				//coloquei toda a saida em um print apenas pois com mais, o print estava saindo desordenado
-				printf("meusDados[%d].temperatura:%d\nmeusDados[%d].idSensor:%d\nmeusDados[%d].idLeitura:%d\n\n", i, meusDados[i].temperatura, i, meusDados[i].idSensor, i, meusDados[i].idLeitura);
+				//printf("meusDados[%d].temperatura:%d\nmeusDados[%d].idSensor:%d\nmeusDados[%d].idLeitura:%d\n\n", i, meusDados[i].temperatura, i, meusDados[i].idSensor, i, meusDados[i].idLeitura);
 				/*printf("meusDados[%d].temperatura:%d\n", i, meusDados[i].temperatura);
 				printf("meusDados[%d].idSensor:%d\n", i, meusDados[i].idSensor);
 				printf("meusDados[%d].idLeitura:%d\n\n", i, meusDados[i].idLeitura);*/
+				temperaturas += meusDados[i].temperatura;
+
+				if(meusDados[i].temperatura > 35){
+					verificaAlerta++;
+				}
+				leituraAtuador++;
+
+				media = ((double)temperaturas)/((double)leituraAtuador);
+				if(verificaAlerta==5 && leituraAtuador==5){
+					printf("\nAtuador %d com leituraAtuador:%d e verificaAlerta: %d\n", *id, leituraAtuador, verificaAlerta);
+					printf("Atuador %d emitiu um alerta vermelho!\nTemperatura média de todas as leituras do sensor: %.2lf\n", *id, media);
+				}
+				else if(verificaAlerta>=5 && leituraAtuador <= 15){
+					printf("\nAtuador %d com leituraAtuador:%d e verificaAlerta: %d\n", *id, leituraAtuador, verificaAlerta);
+					printf("Atuador %d emitiu um alerta amarelo!\nTemperatura média de todas as leituras do sensor: %.2lf\n", *id, media);
+				}
+				else{
+					printf("\nAtuador %d com leituraAtuador:%d e verificaAlerta: %d\n", *id, leituraAtuador, verificaAlerta);
+					printf("Atuador %d emitiu um alerta normal.\nTemperatura média de todas as leituras do sensor: %.2lf\n", *id, media);
+				}
 			}
 		}
+		leituraAtuador=0; verificaAlerta=0; temperaturas=0; media=0.0;
 		fechaLeitura(*id);
 		sleep(2);
 	} 
