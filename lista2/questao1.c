@@ -25,12 +25,12 @@ int main(void) {
 		id = (int*)malloc(sizeof(int));
 		if(id==NULL){puts("ERRO:mallocID"); return 3;}
 		*id = i;
-		if(i < 5){
-			if (pthread_create(tid+i, NULL, Foo, (void *)id)) 
+		if(i < 3){
+			if (pthread_create(tid+i, NULL, Bar, (void *)id)) 
 				return 2;
 		}
 		else {
-			if (pthread_create(tid+i, NULL, Bar, (void *)id)) 
+			if (pthread_create(tid+i, NULL, Foo, (void *)id)) 
 				return 2;
 		}
 	}
@@ -54,7 +54,7 @@ void * Foo(void* args) {
   		//printf("Foo: Comecei: thread %d\n", id);
 		contaFoo++;
 		//printf("contaFoo: %d\n", contaFoo);
-		if(contaFoo==5) {
+		if(contaFoo==7) {
 			contaFoo=0;
   			printf("Foo: Thread %d vai liberar as funcoes Bar para funcionamento\n", id);
 			pthread_cond_broadcast(&condBar);
@@ -81,7 +81,7 @@ void * Bar(void* args) {
 		pthread_mutex_lock(&mutex);
 		contaBar++;
 		printf("contaBar: %d\n", contaBar);
-		if(contaBar==5) {
+		if(contaBar==3) {
 			contaBar=0;
   			printf("Bar: Thread %d vai liberar as funcoes Foo para funcionamento\n", id);
 			pthread_cond_broadcast(&condFoo);
