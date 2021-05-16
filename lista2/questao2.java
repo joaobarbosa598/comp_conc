@@ -1,10 +1,10 @@
 class Buffer {
-static final int N = 5; //qtde de elementos no buffer
-private int[] buffer = new int[N]; //area de dados compartilhada
-//variaveis de estado
-private int count=0; //qtde de posicoes ocupadas no buffer
-private int in=0; //proxima posicao de insercao
-private int out=0; //proxima posicao de retirada
+	static final int N = 1; //qtde de elementos no buffer
+	private int[] buffer = new int[N]; //area de dados compartilhada
+	//variaveis de estado
+	private int count=0; //qtde de posicoes ocupadas no buffer
+	private int in=0; //proxima posicao de insercao
+	private int out=0; //proxima posicao de retirada
 
 // Construtor
 	public Buffer() {
@@ -108,7 +108,7 @@ class Produtor extends Thread {
 
 
 class questao2{
-	static final int P = 9;
+	static final int P = 2;
 	static final int C = 1;
 
 	public static void main(String[] args){
@@ -116,15 +116,26 @@ class questao2{
 	    Buffer buffer = new Buffer();      // Monitor
 	    Consumidor[] cons = new Consumidor[C];   // Consumidores
 	    Produtor[] prod = new Produtor[P];       // Produtores
+	    
 
-	    for (i=0; i<C; i++) {
-	       cons[i] = new Consumidor(i+1, 1000, buffer);
-	       cons[i].start(); 
-	    }
-	    for (i=0; i<P; i++) {
-	    	
+	    for (i=0; i<P/2; i++) {
 	       prod[i] = new Produtor(i+1, 1000, buffer);
 	       prod[i].start(); 
 	    }
+
+	    for (i=P/2; i<P; i++) {
+	       prod[i] = new Produtor(i+1, 1000, buffer);
+	       prod[i].start(); 
+	    }
+	    for (i=0; i<C/2; i++) {
+	       cons[i] = new Consumidor(i+1, 1000, buffer);
+	       cons[i].start(); 
+	    }
+
+	    for (i=C/2; i<C; i++) {
+	       cons[i] = new Consumidor(i+1, 1000, buffer);
+	       cons[i].start(); 
+	    }
+
 	  }
 }
