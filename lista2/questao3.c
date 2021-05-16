@@ -23,7 +23,7 @@ int main(void) {
 		id = (int*)malloc(sizeof(int));
 		if(id==NULL){puts("ERRO:mallocID"); return 3;}
 		*id = i;
-		if(i < 1 || i > 1){
+		if(i > 0){
 			if (pthread_create(tid+i, NULL, A, (void *)id)) 
 				return 2;
 		}
@@ -44,20 +44,20 @@ int main(void) {
 }
 
 void * A (void *tid) {
-	for (int i=0; i<100; i++) {
-		pthread_mutex_lock(&x_mutex);
+	pthread_mutex_lock(&x_mutex);
+	for (int i=0; i<1000; i++) {
 		x++;
-		if(!(x%10)){
+		if((x%10)==0){
 			//printf("%d\n", x);
 			pthread_cond_signal(&x_cond);
 		}
-		pthread_mutex_unlock(&x_mutex);
 	} 
+	pthread_mutex_unlock(&x_mutex);
 }
 
 void * B (void *tid) {
 	pthread_mutex_lock(&x_mutex);
-	if(x%10)
+	if(x%10!=0 || x==0)
 		pthread_cond_wait(&x_cond, &x_mutex);
 	printf("X=%d\n", x);
 	pthread_mutex_unlock(&x_mutex);
