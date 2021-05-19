@@ -104,19 +104,24 @@ void * atuador(void * arg){
 
 				if(ultimasCincoLeituras==5 && ultimasCincoTemperaturas==5){
 					//printf("\nAtuador %d com ultimasCincoLeituras:%d e ultimasCincoTemperaturas: %d\n", *id, ultimasCincoLeituras, ultimasCincoTemperaturas);
-					printf("Atuador %d emitiu um alerta vermelho!\nTemperatura média de todas as leituras do sensor: %.2lf\n\n", *id, media);
+					printf("Atuador %d emitiu um alerta vermelho!\nTemperatura média de todas as leituras do sensor: %.2lf\n", *id, media);
 					ultimasCincoLeituras = 0;
 					ultimasCincoTemperaturas =0;
 				}
-				else if(ultimasQuinzeLeituras>5 && ultimasQuinzeLeituras<=15 && ultimasQuinzeTemperaturas==5){
+				else if(ultimasQuinzeLeituras>5 && ultimasQuinzeLeituras<=15 && ultimasQuinzeTemperaturas>=5){
 					//printf("\nAtuador %d com ultimasQuinzeLeituras:%d e ultimasQuinzeTemperaturas: %d\n", *id, ultimasQuinzeLeituras, ultimasQuinzeTemperaturas);
-					printf("Atuador %d emitiu um alerta amarelo!\nTemperatura média de todas as leituras do sensor: %.2lf\n\n", *id, media);
+					printf("Atuador %d emitiu um alerta amarelo!\nTemperatura média de todas as leituras do sensor: %.2lf\n", *id, media);
 					ultimasQuinzeLeituras=0;
 					ultimasQuinzeTemperaturas=0;
 				}
 				else{
-					printf("Atuador %d emitiu um alerta normal.\nTemperatura média de todas as leituras do sensor: %.2lf\n\n", *id, media);
+					//printf("\nAtuador %d com ultimasCincoLeituras:%d e ultimasCincoTemperaturas: %d\n", *id, ultimasCincoLeituras, ultimasCincoTemperaturas);
+					//printf("Atuador %d com ultimasQuinzeLeituras:%d e ultimasQuinzeTemperaturas: %d\n", *id, ultimasQuinzeLeituras, ultimasQuinzeTemperaturas);
+					printf("Atuador %d emitiu um alerta normal.\nTemperatura média de todas as leituras do sensor: %.2lf\n", *id, media);
 				}
+
+				if(ultimasCincoLeituras>5) {ultimasCincoLeituras = 0; ultimasCincoTemperaturas = 0;}
+				if(ultimasQuinzeLeituras>15) {ultimasQuinzeLeituras = 0; ultimasQuinzeTemperaturas = 0;}
 			}
 		}
 		todasAsLeituras=0; 

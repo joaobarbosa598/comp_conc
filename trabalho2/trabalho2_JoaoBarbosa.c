@@ -1,5 +1,5 @@
-/*Nome: João Vitor de Freitas Barbosa
-DRE: 117055449
+/*Nome: João Vitor de Freitas Barbosa	DRE: 117055449
+Nome: Leonardo Emerson André Alves	DRE: 117062624
 Trabalho 2 de computacao concorrente*/
 #include <pthread.h>
 #include <stdio.h>
